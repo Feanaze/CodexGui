@@ -38,7 +38,11 @@ English | [简体中文](README.md)
 # 1. install the CLI
 npm install -g @openai/codex
 
-# 2. run the GUI from source
+# 2. clone the repository
+git clone https://github.com/Feanaze/CodexGui.git
+cd CodexGui
+
+# 3. run the GUI from source
 dotnet run
 ```
 
@@ -85,4 +89,4 @@ Add `-p:SelfContained=true` for a build that needs no pre-installed runtime. See
 
 ## License
 
-[MIT](LICENSE). Third-party notices: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+[MIT](LICENSE) © 2026 Feanaze. Third-party notices: [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
