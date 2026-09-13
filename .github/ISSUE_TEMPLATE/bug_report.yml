@@ -1,0 +1,90 @@
+name: Bug 报告
+description: 报告一个可以复现的问题
+labels: [ bug ]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        提交前请先看一眼 [FAQ](https://github.com/OWNER/REPO/blob/main/docs/FAQ.md)。
+        **请勿粘贴 API 密钥、auth.json 或完整会话内容**，日志请手动删掉敏感部分。
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: 问题描述
+      description: 发生了什么？你期望发生什么？
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: 复现步骤
+      placeholder: |
+        1. 打开 …
+        2. 切换工作目录到 …
+        3. 发送消息 …
+        4. 观察到 …
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 日志 / 报错
+      description: 数据目录下的 log.txt 节选，或界面上的错误提示（记得删掉密钥）
+      render: text
+    validations:
+      required: false
+
+  - type: input
+    id: gui-version
+    attributes:
+      label: Codex GUI 版本
+      description: 界面右下角显示的版本 / Release 标签 / 提交号
+    validations:
+      required: true
+
+  - type: input
+    id: codex-version
+    attributes:
+      label: Codex CLI 版本
+      description: 在终端执行 `codex --version` 的结果
+    validations:
+      required: true
+
+  - type: input
+    id: windows
+    attributes:
+      label: Windows 版本与位数
+      placeholder: Windows 11 23H2 x64
+    validations:
+      required: true
+
+  - type: input
+    id: dotnet
+    attributes:
+      label: .NET 版本
+      description: 自包含版本可填「自包含」，否则填 `dotnet --list-runtimes` 里的 Desktop Runtime 版本
+    validations:
+      required: false
+
+  - type: dropdown
+    id: data-mode
+    attributes:
+      label: 数据目录模式
+      options:
+        - 默认（%LOCALAPPDATA%\CodexGui）
+        - 便携模式（程序目录\data）
+        - CODEXGUI_DATA_DIR 自定义
+        - 早期路径 D:\Codex\CodexGuiData
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: confirm
+    attributes:
+      label: 确认
+      options:
+        - label: 我已确认贴出的内容里没有 API 密钥、令牌或私人会话内容
+          required: true

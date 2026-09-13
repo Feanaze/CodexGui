@@ -1,0 +1,16 @@
+# Codex CLI 配置示例：OpenAI 官方
+#
+# 放到：%LOCALAPPDATA%\CodexGui\codex-home\config.toml
+# 本文件不含任何密钥：密钥通过环境变量 OPENAI_API_KEY 提供。
+
+model = "gpt-5.1-codex"
+model_provider = "openai"
+
+[projects.'d:\work']
+trust_level = "trusted"
+
+[model_providers.openai]
+name = "openai"
+base_url = "https://api.openai.com/v1"
+wire_api = "responses"
+env_key = "OPENAI_API_KEY"

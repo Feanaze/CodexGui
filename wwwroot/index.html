@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark light" />
+  <title>Codex</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true">
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M3 6h18M3 12h18M3 18h18"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+    <symbol id="i-send" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.2l2 2.5h7.8A2.5 2.5 0 0 1 21 10v6.5A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5z"/></symbol>
+    <symbol id="i-chip" viewBox="0 0 24 24"><rect x="7" y="7" width="10" height="10" rx="2"/><path d="M10 3v3M14 3v3M10 18v3M14 18v3M3 10h3M3 14h3M18 10h3M18 14h3"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 5 6v5.5c0 4.3 2.9 8.2 7 9.5 4.1-1.3 7-5.2 7-9.5V6z"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.3a1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.7 9a1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4a8.5 8.5 0 1 0 10.5 10.5z"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><path d="M20 11.5 12.3 19a4.6 4.6 0 0 1-6.5-6.5l7.6-7.4a3 3 0 0 1 4.3 4.3l-7.6 7.5a1.5 1.5 0 0 1-2.1-2.2l7-6.9"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M15 9V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-dots" viewBox="0 0 24 24"><circle cx="5" cy="12" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="19" cy="12" r="1.4"/></symbol>
+    <symbol id="i-terminal" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="m7 9 3 3-3 3M13 15h4"/></symbol>
+    <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+    <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.4.3.5.7.5 1.1h6c0-.4.1-.8.5-1.1A6 6 0 0 0 12 3z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-min" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-max" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1.5"/></symbol>
+    <symbol id="i-restore" viewBox="0 0 24 24"><rect x="5" y="8" width="10" height="10" rx="1.5"/><path d="M9 8V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4 4 3 3-2.5 4 3.5"/></symbol>
+  </svg>
+
+  <div id="app" class="app">
+    <aside id="sidebar" class="sidebar">
+      <div class="side-head">
+        <div class="chrome-edge chrome-edge-left" aria-hidden="true"></div>
+        <div class="brand">
+          <span class="brand-mark"><svg><use href="#i-spark"/></svg></span>
+          <span class="brand-text">
+            <b>Codex</b>
+            <em id="brand-sub">GUI</em>
+          </span>
+        </div>
+        <button class="icon-btn" id="side-collapse" title="收起侧栏 (Ctrl+B)"><svg><use href="#i-menu"/></svg></button>
+      </div>
+
+      <div class="side-actions">
+        <button id="new-chat" class="new-chat">
+          <svg><use href="#i-plus"/></svg><span>新建对话</span>
+        </button>
+        <div class="search-box">
+          <svg><use href="#i-search"/></svg>
+          <input id="session-search" type="text" placeholder="搜索对话" spellcheck="false" />
+        </div>
+      </div>
+
+      <div id="session-list" class="session-list"></div>
+
+      <div class="side-foot">
+        <button class="side-item" id="open-settings">
+          <svg><use href="#i-gear"/></svg><span>设置</span>
+        </button>
+        <button class="side-item" id="theme-toggle">
+          <svg class="theme-dark-icon"><use href="#i-moon"/></svg>
+          <span id="theme-label">深色</span>
+        </button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar" id="topbar">
+        <div class="chrome-edge chrome-edge-top" aria-hidden="true"></div>
+        <button class="icon-btn ghost" id="side-toggle" title="展开侧栏 (Ctrl+B)"><svg><use href="#i-menu"/></svg></button>
+        <div class="chip-row">
+          <button class="chip" id="chip-workdir" title="切换工作目录">
+            <svg><use href="#i-folder"/></svg>
+            <span id="workdir-label" class="ellipsis">工作目录</span>
+            <svg class="chev"><use href="#i-chevron"/></svg>
+          </button>
+          <button class="chip" id="chip-model" title="切换模型">
+            <svg><use href="#i-chip"/></svg>
+            <span id="model-label" class="ellipsis">默认模型</span>
+            <svg class="chev"><use href="#i-chevron"/></svg>
+          </button>
+          <button class="chip" id="chip-perm" title="权限与沙箱">
+            <svg><use href="#i-shield"/></svg>
+            <span id="perm-label" class="ellipsis">工作目录可写</span>
+            <svg class="chev"><use href="#i-chevron"/></svg>
+          </button>
+        </div>
+        <div class="drag-region" id="drag-region"></div>
+        <div class="win-buttons">
+          <button class="win-btn" data-win="minimize" title="最小化"><svg><use href="#i-min"/></svg></button>
+          <button class="win-btn" data-win="maximize" title="最大化" id="win-max"><svg><use href="#i-max"/></svg></button>
+          <button class="win-btn danger" data-win="close" title="关闭"><svg><use href="#i-close"/></svg></button>
+        </div>
+      </header>
+
+      <div class="chat-scroll" id="chat-scroll">
+        <div class="chat" id="chat"></div>
+        <button class="scroll-bottom hidden" id="scroll-bottom" title="回到最新"><svg><use href="#i-chevron"/></svg></button>
+      </div>
+
+      <div class="composer-shell">
+        <div class="composer" id="composer">
+          <div class="attachments" id="attachments"></div>
+          <textarea id="input" rows="1" spellcheck="false"
+                    placeholder="给 Codex 发消息…"></textarea>
+          <div class="composer-bar">
+            <div class="composer-left">
+              <button class="icon-btn" id="attach" title="添加图片"><svg><use href="#i-clip"/></svg></button>
+              <button class="icon-btn" id="open-folder" title="在资源管理器中打开工作目录"><svg><use href="#i-folder"/></svg></button>
+              <span class="status-text" id="status-text"></span>
+            </div>
+            <div class="composer-right">
+              <span class="hint" id="composer-hint">Enter 发送 · Shift+Enter 换行</span>
+              <button class="send-btn" id="send" title="发送"><svg><use href="#i-send"/></svg></button>
+            </div>
+          </div>
+        </div>
+        <div class="under-composer">
+          <span id="foot-left"></span>
+          <span id="foot-right"></span>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div class="modal-mask hidden" id="settings-mask">
+    <div class="modal" role="dialog" aria-modal="true">
+      <header class="modal-head">
+        <h2>设置</h2>
+        <button class="icon-btn" id="settings-close"><svg><use href="#i-close"/></svg></button>
+      </header>
+      <div class="modal-body" id="settings-body"></div>
+      <footer class="modal-foot">
+        <span class="modal-note" id="settings-note"></span>
+        <button class="btn primary" id="settings-done">完成</button>
+      </footer>
+    </div>
+  </div>
+
+  <div class="menu hidden" id="menu"></div>
+  <div class="toasts" id="toasts"></div>
+  <input type="file" id="file-input" accept="image/*" multiple hidden />
+
+  <script src="md.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

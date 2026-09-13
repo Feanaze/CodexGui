@@ -1,0 +1,46 @@
+# ---------------------------------------------------------------- 构建产物
+bin/
+obj/
+dist/
+publish/
+artifacts/
+*.user
+*.suo
+*.cache
+
+# ------------------------------------------------- 运行时数据（绝对不能提交！）
+# 数据目录里包含 config.json、会话记录、codex-home/auth.json（API 密钥）、日志。
+# 默认位置：%LOCALAPPDATA%\CodexGui
+# 便携模式：<程序目录>\data
+CodexGuiData/
+data/
+codex-home/
+auth.json
+config.toml
+config.json
+log.txt
+sessions/
+attachments/
+WebView2/
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+*.jsonl
+portable.marker
+
+# ---------------------------------------------------------------- 编辑器 / IDE
+.vs/
+.vscode/
+.idea/
+*.swp
+*~
+
+# ---------------------------------------------------------------- 系统垃圾文件
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# ---------------------------------------------------------------- 本地测试产物
+.smoke/
+*.log
+node_modules/

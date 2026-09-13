@@ -1,0 +1,34 @@
+name: 功能建议
+description: 提一个改进想法
+labels: [ enhancement ]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 你遇到的问题 / 使用场景
+      description: 现在哪里别扭？为什么想要这个功能？
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: 期望的方案
+      description: 你希望它怎么工作？（界面、配置项、快捷键……）
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 你考虑过的替代方案
+    validations:
+      required: false
+
+  - type: textarea
+    id: extra
+    attributes:
+      label: 补充信息
+      description: 截图、类似项目的做法、参考链接等
+    validations:
+      required: false

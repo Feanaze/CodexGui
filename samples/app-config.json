@@ -1,0 +1,21 @@
+{
+  "WorkDir": "D:\\work",
+  "CodexPath": null,
+  "Model": "",
+  "ReasoningEffort": "",
+  "Sandbox": "workspace-write",
+  "Approval": "never",
+  "Theme": "dark",
+  "FontSize": 15,
+  "ShowReasoning": true,
+  "AutoCollapseTools": true,
+  "SendOnEnter": true,
+  "RecentDirs": [],
+  "WindowWidth": 1360,
+  "WindowHeight": 860,
+  "WindowLeft": "NaN",
+  "WindowTop": "NaN",
+  "WindowMaximized": false,
+  "SidebarWidth": 272,
+  "LastSessionId": null
+}

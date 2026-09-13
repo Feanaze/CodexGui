@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 使用交流 / 提问
+    url: https://github.com/OWNER/REPO/discussions
+    about: 配置、使用、环境相关的问题请到 Discussions
+  - name: 安全漏洞（私密报告）
+    url: https://github.com/OWNER/REPO/security/advisories/new
+    about: 不要用公开 Issue 报告安全问题，见 SECURITY.md

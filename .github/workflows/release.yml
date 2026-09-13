@@ -1,0 +1,45 @@
+name: release
+
+on:
+  push:
+    tags: [ 'v*' ]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '要发布的标签（例如 v1.0.0）'
+        required: true
+
+jobs:
+  release:
+    runs-on: windows-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+
+      - name: Publish (self-contained single file)
+        run: >
+          dotnet publish CodexGui.csproj -c Release -r win-x64
+          -p:PublishSingleFile=true -p:SelfContained=true
+          -p:IncludeNativeLibrariesForSelfExtract=true -p:DebugType=none
+          -o dist
+
+      - name: Check for secrets / session data
+        shell: pwsh
+        run: ./scripts/check-secrets.ps1 -Path dist
+
+      - name: Zip
+        shell: pwsh
+        run: Compress-Archive -Path dist/* -DestinationPath CodexGui-win-x64.zip
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: CodexGui-win-x64.zip
+          generate_release_notes: true

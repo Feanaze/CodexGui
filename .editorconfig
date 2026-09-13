@@ -1,0 +1,25 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 4
+
+[*.{js,css,html,json,yml,yaml}]
+indent_size = 2
+
+[*.{csproj,props,targets,manifest,xaml}]
+indent_size = 2
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.ps1]
+indent_size = 4
+end_of_line = crlf
+# Windows PowerShell 5.1 读取无 BOM 的 UTF-8 脚本会按 ANSI 解码，中文会变成乱码并报语法错，
+# 所以 PowerShell 脚本必须保留 UTF-8 BOM。
+charset = utf-8-bom

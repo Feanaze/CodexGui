@@ -1,0 +1,31 @@
+# Codex CLI 配置示例：DeepSeek（或任意 OpenAI 兼容服务）
+#
+# 放到：%LOCALAPPDATA%\CodexGui\codex-home\config.toml
+# 便携模式：<程序目录>\data\codex-home\config.toml
+#
+# 本文件不含任何密钥：密钥通过环境变量 DEEPSEEK_API_KEY 提供。
+
+model = "deepseek-chat"            # 改成你的服务商实际支持的模型名
+model_provider = "deepseek"
+preferred_auth_method = "apikey"
+forced_login_method = "api"
+model_reasoning_effort = "high"    # low / medium / high / max
+web_search = "disabled"            # 服务商不支持联网搜索时保持关闭
+
+# 让 Codex 直接信任这些工作目录，省掉首次进入时的确认
+[projects.'d:\work']
+trust_level = "trusted"
+
+[model_providers.deepseek]
+name = "deepseek"
+base_url = "https://api.deepseek.com/"
+wire_api = "chat"                  # OpenAI 兼容的 /chat/completions；支持 Responses API 时可改成 "responses"
+env_key = "DEEPSEEK_API_KEY"
+
+# ---------------------------------------------------------------- 不推荐的写法
+# 只有服务商只给长期 token、又不想配环境变量时再用（密钥会明文落盘）：
+#
+# [model_providers.deepseek]
+# base_url = "https://api.deepseek.com/"
+# wire_api = "chat"
+# experimental_bearer_token = "PUT-YOUR-KEY-HERE"

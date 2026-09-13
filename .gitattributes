@@ -1,0 +1,18 @@
+# 仓库内统一使用 LF，C# / 前端 / 文档一视同仁；二进制文件不做换行转换。
+* text=auto eol=lf
+
+*.cs        text diff=csharp
+*.xaml      text diff=html
+*.csproj    text diff=xml
+*.props     text diff=xml
+*.targets   text diff=xml
+*.manifest  text diff=xml
+*.json      text
+*.md        text diff=markdown
+
+*.png       binary
+*.ico       binary
+*.jpg       binary
+*.exe       binary
+*.dll       binary
+*.zip       binary
