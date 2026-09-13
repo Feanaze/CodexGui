@@ -16,11 +16,14 @@ $ErrorActionPreference = 'Stop'
 
 # 二进制/大型目录直接跳过，省时间也避免误报
 $skipDirs = @('\.git\', '\bin\', '\obj\', '\node_modules\')
-$skipExt = @('.exe', '.dll', '.pdb', '.ico', '.png', '.jpg', '.zip', '.7z', '.woff', '.woff2', '.sqlite', '.sqlite-wal', '.sqlite-shm')
+$skipExt = @('.exe', '.dll', '.pdb', '.ico', '.png', '.jpg', '.zip', '.7z', '.woff', '.woff2', '.sqlite', '.sqlite-wal', '.sqlite-shm',
+             '.o', '.a', '.lib', '.obj', '.res', '.class', '.pyc', '.nupkg', '.snk', '.pfx')
 if (-not $IncludeDependencies) { $skipDirs += @('\.nuget\') }
 
 # 允许出现的“像密钥但不是密钥”的占位符
-$allowWords = @('你的密钥', 'YOUR_KEY', 'YOUR-KEY', 'your-key', 'PUT-YOUR', 'placeholder', 'example', 'xxx', '***', 'REDACTED', '$env:', '%', '$(')
+$allowWords = @('你的密钥', 'YOUR_KEY', 'YOUR-KEY', 'your-key', 'PUT-YOUR', 'placeholder', 'example', 'xxx', '***', 'REDACTED', '$env:', '%', '$(',
+                # comctl32 清单里的 publicKeyToken，是公开的强名称标识，不是密钥
+                '6595b64144ccf1df')
 
 $patterns = [ordered]@{
     'API 密钥（sk-…）'      = 'sk-[A-Za-z0-9_\-]{16,}'

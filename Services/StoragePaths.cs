@@ -66,8 +66,19 @@ public static class StoragePaths
         try
         {
             var baseDir = AppContext.BaseDirectory;
-            if (File.Exists(Path.Combine(baseDir, PortableMarker)))
+            var marker = Path.Combine(baseDir, PortableMarker);
+            if (File.Exists(marker))
+            {
+                // 标记文件里写了路径就用它（安装包把数据目录放在 <安装目录>\data）；
+                // 文件为空则用 <exe 目录>\data（绿色便携版）。
+                var markerDir = File.ReadAllText(marker).Trim().Trim('"');
+                if (markerDir.Length > 0)
+                {
+                    if (!Path.IsPathRooted(markerDir)) markerDir = Path.Combine(baseDir, markerDir);
+                    return Path.GetFullPath(markerDir);
+                }
                 return Path.Combine(baseDir, "data");
+            }
         }
         catch
         {

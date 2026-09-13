@@ -1,0 +1,32 @@
+#include <winver.h>
+
+1 ICON "..\\Assets\\app.ico"
+1 24 "app.manifest"
+
+VS_VERSION_INFO VERSIONINFO
+FILEVERSION    1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEFLAGSMASK  0x3fL
+FILEOS         VOS_NT_WINDOWS32
+FILETYPE       VFT_APP
+FILEFLAGS      0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404B0"
+        BEGIN
+            VALUE "CompanyName",      "Codex GUI"
+            VALUE "FileDescription",  "Codex GUI Setup"
+            VALUE "FileVersion",      "1.0.0.0"
+            VALUE "InternalName",     "CodexGuiSetup"
+            VALUE "OriginalFilename", "CodexGui-Setup-1.0.0.exe"
+            VALUE "ProductName",      "Codex GUI"
+            VALUE "ProductVersion",   "1.0.0"
+            VALUE "Comments",         "Installer for Codex GUI"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END

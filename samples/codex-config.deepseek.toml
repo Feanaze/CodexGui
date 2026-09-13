@@ -19,7 +19,7 @@ trust_level = "trusted"
 [model_providers.deepseek]
 name = "deepseek"
 base_url = "https://api.deepseek.com/"
-wire_api = "chat"                  # OpenAI 兼容的 /chat/completions；支持 Responses API 时可改成 "responses"
+wire_api = "responses"             # 当前 Codex CLI 只认 Responses 协议（"chat" 会直接报错）
 env_key = "DEEPSEEK_API_KEY"
 
 # ---------------------------------------------------------------- 不推荐的写法
@@ -27,5 +27,5 @@ env_key = "DEEPSEEK_API_KEY"
 #
 # [model_providers.deepseek]
 # base_url = "https://api.deepseek.com/"
-# wire_api = "chat"
+# wire_api = "responses"
 # experimental_bearer_token = "PUT-YOUR-KEY-HERE"

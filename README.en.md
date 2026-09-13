@@ -62,7 +62,7 @@ forced_login_method = "api"
 [model_providers.deepseek]
 name = "deepseek"
 base_url = "https://api.deepseek.com/"
-wire_api = "chat"
+wire_api = "responses"          # current Codex CLI only speaks the Responses protocol
 env_key = "DEEPSEEK_API_KEY"
 ```
 
@@ -72,6 +72,24 @@ See [`samples/`](samples/) for ready-to-copy examples, and [docs/CONFIGURATION.m
 
 No telemetry, no auto-update, no account. Sessions, configuration and `codex-home` (including `auth.json`) live in a local data directory:
 `%LOCALAPPDATA%\CodexGui`, or `<program dir>\data` in portable mode (a `portable.marker` file next to the executable), or whatever `CODEXGUI_DATA_DIR` points to.
+
+## Installer
+
+`installer/` builds a **single-file installer exe** (self-contained .NET runtime + Codex CLI bundled, so the target machine needs nothing preinstalled):
+
+```powershell
+.\installer\build-installer.ps1 -OutputExe D:\CodexGui-Setup-1.0.0.exe
+```
+
+It installs to a directory of the user's choice (`%LOCALAPPDATA%\Programs\CodexGui` by default), puts app + runtime in `<install>\app`, the CLI in `<install>\codex`, keeps user data in `<install>\data`, optionally adds `<install>\codex\bin` to the user `PATH`, creates Desktop/Start-Menu shortcuts and registers an uninstaller.
+
+The installer ships **no API keys, no conversation history and no user config** — only binaries. Silent install is supported:
+
+```powershell
+CodexGui-Setup-1.0.0.exe /silent /dir=D:\CodexGui
+```
+
+On first launch the settings panel opens automatically so the user can enter the API base URL, model and key. See [installer/README.md](installer/README.md).
 
 ## Build
 

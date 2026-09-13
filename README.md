@@ -20,6 +20,7 @@
 - **图片附件**：粘贴或选择图片，随提示词一起交给 Codex（`-i` 参数）。
 - **模型 / 推理强度 / 沙箱权限**：顶栏一键切换，只读、工作目录可写、完全访问三档。
 - **界面设置**：深色 / 浅色 / 跟随系统、字号、Enter 发送、自动折叠、显示思考过程。
+- **API 配置面板**：设置里直接填 API 链接、模型名和密钥，写进 codex-home，不用手改配置文件；首次启动会自动打开。
 - **原生窗口体验**：无边框窗口 + WebView2 原生拖拽标题栏、双击最大化、右键系统菜单。
 - **纯本地**：无账号、无遥测，所有会话与配置只保存在本机数据目录里。
 
@@ -67,7 +68,7 @@ forced_login_method = "api"
 [model_providers.deepseek]
 name = "deepseek"
 base_url = "https://api.deepseek.com/"
-wire_api = "chat"
+wire_api = "responses"          # 新版 Codex CLI 只支持 Responses 协议
 env_key = "DEEPSEEK_API_KEY"
 ```
 
@@ -105,6 +106,36 @@ dotnet run
 ```
 
 **从 Release 运行：** 解压后双击 `CodexGui.exe`。
+
+## 安装包（一键安装，可选）
+
+`installer/` 可以把整个程序打成一个 **exe 安装包**：自带 .NET 运行时和 Codex CLI，目标机器不需要预先装任何环境。
+
+```powershell
+.\installer\build-installer.ps1 -OutputExe D:\CodexGui-Setup-1.0.0.exe
+```
+
+安装包会做这些事：
+
+| 步骤 | 说明 |
+| --- | --- |
+| 释放文件 | `<安装目录>\app`（程序 + 自包含运行时）、`<安装目录>\codex`（CLI） |
+| 数据目录 | 写 `<安装目录>\app\portable.marker`，让数据落在 `<安装目录>\data` |
+| 默认工作目录 | 写 `<安装目录>\data\config.json`，`WorkDir` = 安装目录 |
+| PATH | 把 `<安装目录>\codex\bin` 加进用户 PATH（界面里可取消） |
+| 快捷方式 | 桌面 + 开始菜单（可取消） |
+| 卸载 | 注册到「应用和功能」，卸载程序是 `<安装目录>\uninstall.exe` |
+
+安装包内**不包含任何密钥、对话记录或用户配置**，只有程序文件、运行时和 CLI 二进制；`data` 目录是安装之后运行时才生成的。
+
+静默安装 / 自定义目录：
+
+```powershell
+CodexGui-Setup-1.0.0.exe /silent /dir=D:\CodexGui
+CodexGui-Setup-1.0.0.exe /nopath /noshortcut /nolaunch
+```
+
+装完第一次启动会自动打开设置面板：填上 API 链接（例如 `https://api.deepseek.com/`）、模型名和密钥就能开始对话，内容写到 `<安装目录>\data\codex-home\config.toml`，只保存在本机。构建细节见 [installer/README.md](installer/README.md)。
 
 ## 命令行参数
 
@@ -165,6 +196,7 @@ CodexGui/
 │  ├─ styles.css                 主题与样式
 │  └─ md.js                      Markdown / 代码高亮
 ├─ tools/                        Node 脚本：DOM 桩、并发/UI 冒烟测试、图标生成
+├─ installer/                    单文件安装包：Win32 安装/卸载程序 + 打包脚本
 ├─ docs/                         架构、构建、配置、FAQ
 └─ samples/                      配置示例（不含任何密钥）
 ```

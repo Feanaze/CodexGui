@@ -36,7 +36,7 @@
 **Q：报 `401` / `invalid api key`。**
 
 1. 密钥是否写在环境变量里而**没有重启** GUI（`setx` 只对新进程生效，重启 GUI 或注销一次）；
-2. `base_url` 末尾斜杠、`wire_api`（`chat` vs `responses`）是否和服务商匹配；
+2. `base_url` 末尾斜杠是否正确、`wire_api` 是否写成了 `"responses"`（新版 Codex CLI 已不支持 `"chat"`）；
 3. 第三方中转是否允许 Codex CLI 的请求格式。
 
 **Q：`web_search` 报错或模型说不能联网。**
@@ -87,6 +87,14 @@
 `<数据目录>\codex-home\auth.json` 或 `config.toml` 里，**明文**。这是 Codex CLI 的既有设计。想降低风险就用 `env_key` + 系统环境变量，或者只给密钥最小额度。
 
 ## 故障排查
+
+**Q：我是用安装包装的，数据在哪？怎么卸载？**
+
+数据在 `<安装目录>\data`（会话、配置、`codex-home`）。卸载用 `<安装目录>\uninstall.exe`，或「设置 → 应用 → 已安装的应用 → Codex GUI」。卸载默认**保留** `data`，勾选「同时删除 data 目录」才会连会话记录和密钥一起删掉。
+
+**Q：安装包为什么有 190 MB 左右？**
+
+它把三样东西打在一起了：Codex GUI 本体、自包含的 .NET 7 桌面运行时（约 143 MB，占位最大，换来的是目标机器不用装 .NET）、以及 Codex CLI 的原生二进制（约 380 MB 未压缩，压完约 130 MB）。如果机器上已经有 .NET 7 Desktop Runtime，也可以只用 `dotnet publish` 的小体积版本，见 [BUILD.md](BUILD.md)。
 
 **Q：日志在哪？**
 

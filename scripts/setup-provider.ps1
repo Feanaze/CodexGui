@@ -10,7 +10,8 @@
 param(
     [string]$BaseUrl = 'https://api.deepseek.com/',
     [string]$Model = 'deepseek-chat',
-    [ValidateSet('chat', 'responses')][string]$WireApi = 'chat',
+    # 新版 Codex CLI 只支持 Responses 协议，wire_api="chat" 会直接报错
+    [ValidateSet('responses')][string]$WireApi = 'responses',
     [string]$ProviderId = 'deepseek',
     [string]$EnvKeyName = '',
     [string]$CodexHome = '',

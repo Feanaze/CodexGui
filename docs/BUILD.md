@@ -58,6 +58,17 @@ Compress-Archive dist\* artifacts\CodexGui-1.0.0-win-x64.zip
 New-Item -ItemType File dist\portable.marker
 ```
 
+## 打成单文件安装包
+
+想让用户「下载一个 exe、双击、填个 API 地址就能用」，用仓库里的安装器构建脚本：
+
+```powershell
+.\installer\build-installer.ps1 -OutputExe D:\CodexGui-Setup-1.0.0.exe
+```
+
+它会自动完成：发布 GUI → 转成自包含（离线可用）→ 打包 Codex CLI → 编译原生安装/卸载程序 →
+合成一个自解压安装包。完整说明见 [../installer/README.md](../installer/README.md)。
+
 ## 把 Codex CLI 一起打包（可选）
 
 如果想让用户连 `npm install -g @openai/codex` 都不用做，可以把 npm 全局安装目录里的原生 CLI 复制进来，保持 npm 的相对布局：

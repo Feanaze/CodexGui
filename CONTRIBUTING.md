@@ -31,6 +31,7 @@ dotnet run -- --selftest "只回复：pong"
 - `Services/`：配置、数据目录、codex 定位与启动、会话存储、内嵌资源。
 - `wwwroot/`：前端界面，构建时会被嵌进 exe（`EmbeddedResource`）。
 - `tools/`：Node 写的 DOM 桩与冒烟测试。
+- `installer/`：单文件安装包（原生 Win32 安装/卸载程序 + 打包脚本），见 [installer/README.md](installer/README.md)。
 
 更完整的说明见 [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)。
 
@@ -49,6 +50,7 @@ dotnet build CodexGui.csproj -c Release                 # 必须 0 警告 0 错�
 node tools/concurrency-test.js                          # 并发调度
 node tools/session-ui-test.js                           # 会话 UI
 node tools/window-chrome-test.js                        # 窗口标题栏
+node tools/provider-settings-test.js                    # 设置里的 API 配置面板
 ```
 
 改动涉及进程调度、事件解析或会话读写时，请补一个能复现问题的用例，或在 PR 里写清手工验证步骤（截图/日志都可以）。

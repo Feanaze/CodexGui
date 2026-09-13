@@ -10,7 +10,9 @@
 解析顺序（`Services/StoragePaths.cs`）：
 
 1. 环境变量 `CODEXGUI_DATA_DIR`（绝对路径）；
-2. 程序目录下存在 `portable.marker` → `<程序目录>\data`（便携模式）；
+2. 程序目录下存在 `portable.marker`：
+   - 文件为空 → `<程序目录>\data`（绿色便携版）；
+   - 文件里写了一行路径 → 用这个路径当数据目录（安装包把它写成 `<安装目录>\data`）；
 3. 已经存在 `config.json` 的 `%LOCALAPPDATA%\CodexGui`；
 4. `D:\Codex\CodexGuiData`（最早版本写死的路径，只要目录还在就继续沿用，避免老用户会话「消失」）；
 5. 默认 `%LOCALAPPDATA%\CodexGui`。
@@ -80,7 +82,7 @@ trust_level = "trusted"          # 免去首次进入目录的信任确认
 [model_providers.deepseek]
 name = "deepseek"
 base_url = "https://api.deepseek.com/"
-wire_api = "chat"                # OpenAI 兼容的 /chat/completions；支持 Responses API 时可改 "responses"
+wire_api = "responses"           # 当前 Codex CLI 只认 Responses 协议（"chat" 已被移除）
 env_key = "DEEPSEEK_API_KEY"
 ```
 
@@ -108,7 +110,7 @@ env_key = "OPENAI_API_KEY"
 ```toml
 [model_providers.deepseek]
 base_url = "https://api.deepseek.com/"
-wire_api = "chat"
+wire_api = "responses"
 experimental_bearer_token = "sk-你的密钥"
 ```
 

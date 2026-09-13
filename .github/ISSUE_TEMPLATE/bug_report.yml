@@ -5,7 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        提交前请先看一�?[FAQ](https://github.com/Feanaze/CodexGui/blob/main/docs/FAQ.md)�?        **请勿粘贴 API 密钥、auth.json 或完整会话内�?*，日志请手动删掉敏感部分�?
+        提交前建议先看 FAQ：https://github.com/Feanaze/CodexGui/blob/main/docs/FAQ.md
+        **请勿粘贴 API 密钥、auth.json 或完整会话内容**，日志请手动删掉敏感部分。
+
   - type: textarea
     id: what-happened
     attributes:
@@ -19,14 +21,19 @@ body:
     attributes:
       label: 复现步骤
       placeholder: |
-        1. 打开 �?        2. 切换工作目录�?�?        3. 发送消�?�?        4. 观察�?�?    validations:
+        1. 打开 …
+        2. 切换工作目录到 …
+        3. 发送消息 …
+        4. 观察到 …
+    validations:
       required: true
 
   - type: textarea
     id: logs
     attributes:
       label: 日志 / 报错
-      description: 数据目录下的 log.txt 节选，或界面上的错误提示（记得删掉密钥�?      render: text
+      description: 数据目录下的 log.txt 节选，或界面上的错误提示（记得删掉密钥）
+      render: text
     validations:
       required: false
 
@@ -34,20 +41,23 @@ body:
     id: gui-version
     attributes:
       label: Codex GUI 版本
-      description: 界面右下角显示的版本 / Release 标签 / 提交�?    validations:
+      description: 界面右下角显示的版本 / Release 标签 / 提交号
+    validations:
       required: true
 
   - type: input
     id: codex-version
     attributes:
       label: Codex CLI 版本
-      description: 在终端执�?`codex --version` 的结�?    validations:
+      description: 在终端执行 `codex --version` 的结果
+    validations:
       required: true
 
   - type: input
     id: windows
     attributes:
-      label: Windows 版本与位�?      placeholder: Windows 11 23H2 x64
+      label: Windows 版本与位数
+      placeholder: Windows 11 23H2 x64
     validations:
       required: true
 
@@ -55,7 +65,7 @@ body:
     id: dotnet
     attributes:
       label: .NET 版本
-      description: 自包含版本可填「自包含」，否则�?`dotnet --list-runtimes` 里的 Desktop Runtime 版本
+      description: 自包含版本可填「自包含」，否则填 `dotnet --list-runtimes` 里的 Desktop Runtime 版本
     validations:
       required: false
 
@@ -64,7 +74,10 @@ body:
     attributes:
       label: 数据目录模式
       options:
-        - 默认�?LOCALAPPDATA%\CodexGui�?        - 便携模式（程序目录\data�?        - CODEXGUI_DATA_DIR 自定�?        - 早期路径 D:\Codex\CodexGuiData
+        - 默认（%LOCALAPPDATA%\CodexGui）
+        - 便携模式（程序目录\data）
+        - CODEXGUI_DATA_DIR 自定义
+        - 早期路径 D:\Codex\CodexGuiData
     validations:
       required: false
 
