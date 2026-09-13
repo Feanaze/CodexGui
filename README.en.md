@@ -23,6 +23,10 @@ English | [简体中文](README.md)
 - **Native window chrome**: frameless window with WebView2 native drag region, double-click maximize and system menu.
 - **Local-only**: no account, no telemetry, everything stays on your machine.
 
+## Screenshot
+
+![CodexGui Screenshot](docs/images/screenshot.png)
+
 ## Requirements
 
 | Component | Notes |
