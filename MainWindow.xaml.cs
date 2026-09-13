@@ -76,6 +76,7 @@ public partial class MainWindow : Window
         SizeChanged += (_, _) => RememberNormalBounds();
         RestoreWindowBounds();
         LoadModels();
+        ProviderConfig.EnsureTrusted(_config.WorkDir);
         Loaded += async (_, _) => await InitWebAsync();
         Closing += OnClosing;
         StateChanged += (_, _) => PostWindowState();
@@ -342,10 +343,69 @@ public partial class MainWindow : Window
         ["models"] = new JsonArray(_models.Select(m => (JsonNode)m.DeepClone()).ToArray()),
         ["defaultModel"] = _configDefaultModel,
         ["defaultEffort"] = _configDefaultEffort,
+        ["provider"] = ProviderStateJson(),
         ["version"] = _codexVersion,
         ["dark"] = IsDarkTheme(),
         ["nativeDrag"] = _nativeChrome,
     };
+
+    /// <summary>服务商配置状态（不含密钥明文），用于界面回显与首启引导。</summary>
+    private static JsonObject ProviderStateJson()
+    {
+        var state = ProviderConfig.Read();
+        return new JsonObject
+        {
+            ["configured"] = state.Configured,
+            ["providerId"] = state.ProviderId,
+            ["baseUrl"] = state.BaseUrl,
+            ["model"] = state.Model,
+            ["hasApiKey"] = state.HasApiKey,
+            ["configPath"] = state.ConfigPath,
+        };
+    }
+
+    /// <summary>界面里填的 API 链接 / 模型 / 密钥写进 codex-home，之后交给 CLI 自己使用。</summary>
+    private void HandleProviderSave(JsonObject msg)
+    {
+        var baseUrl = (msg["baseUrl"]?.GetValue<string>() ?? "").Trim();
+        var model = (msg["model"]?.GetValue<string>() ?? "").Trim();
+        var apiKey = msg["apiKey"]?.GetValue<string>() ?? "";
+        var providerId = msg["providerId"]?.GetValue<string>() ?? "deepseek";
+
+        if (baseUrl.Length == 0)
+        {
+            Toast("error", "请先填写 API 链接（例如 https://api.deepseek.com/）。");
+            return;
+        }
+        if (!baseUrl.StartsWith("http://", StringComparison.OrdinalIgnoreCase)
+            && !baseUrl.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            Toast("error", "API 链接需要以 http:// 或 https:// 开头。");
+            return;
+        }
+
+        var state = ProviderConfig.Save(providerId, baseUrl, model, apiKey, _config.WorkDir);
+
+        // 模型留空就跟随 config.toml，界面里也不必再单独指定
+        _config.Model = "";
+        _config.Save();
+        LoadModels();
+
+        Post(new JsonObject { ["t"] = "config", ["config"] = _config.ToJson() });
+        Post(new JsonObject
+        {
+            ["t"] = "provider",
+            ["configured"] = state.Configured,
+            ["providerId"] = state.ProviderId,
+            ["baseUrl"] = state.BaseUrl,
+            ["model"] = state.Model,
+            ["hasApiKey"] = state.HasApiKey,
+            ["configPath"] = state.ConfigPath,
+        });
+        Toast("info", state.HasApiKey
+            ? "API 配置已保存：" + state.Model
+            : "API 配置已保存，但还没有密钥（请在设置里补一个）。");
+    }
 
     // ------------------------------------------------------------ 消息桥
 
@@ -379,6 +439,7 @@ public partial class MainWindow : Window
                 case "session.rename": HandleRenameSession(msg); break;
                 case "session.draft": HandleDraft(msg); break;
                 case "config.patch": HandleConfigPatch(msg); break;
+                case "provider.save": HandleProviderSave(msg); break;
                 case "dialog.workdir": HandlePickWorkDir(msg); break;
                 case "codex.refresh": HandleCodexRefresh(); break;
                 case "shell.open": OpenPath(msg["path"]?.GetValue<string>()); break;
@@ -634,6 +695,7 @@ public partial class MainWindow : Window
         {
             _config.PushRecentDir(_config.WorkDir);
             BindWorkDirToSession(_config.WorkDir);
+            ProviderConfig.EnsureTrusted(_config.WorkDir);
         }
         _config.Save();
         Post(new JsonObject { ["t"] = "config", ["config"] = _config.ToJson() });
@@ -692,6 +754,7 @@ public partial class MainWindow : Window
         _config.WorkDir = picked;
         _config.PushRecentDir(picked);
         BindWorkDirToSession(picked);
+        ProviderConfig.EnsureTrusted(picked);
         _config.Save();
         Post(new JsonObject { ["t"] = "config", ["config"] = _config.ToJson() });
         Toast("info", "工作目录已切换到 " + picked);

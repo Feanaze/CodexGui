@@ -25,11 +25,7 @@
 
 ## 界面截图
 
-仓库默认不带截图（避免把个人会话内容带进开源仓库）。你可以自己截一张放进 `docs/images/screenshot.png`，再把这里替换成图片引用。
-
-```markdown
-![截图](docs/images/screenshot.png)
-```
+![CodexGui 界面截图](docs/images/screenshot.png)
 
 ## 系统要求
 
@@ -103,7 +99,7 @@ powershell -ExecutionPolicy Bypass -File scripts/setup-provider.ps1 -BaseUrl "ht
 **从源码运行：**
 
 ```powershell
-git clone <你的仓库地址>
+git clone https://github.com/Feanaze/CodexGui.git
 cd CodexGui
 dotnet run
 ```
@@ -205,6 +201,6 @@ dotnet publish CodexGui.csproj -c Release -r win-x64 `
 
 ## 许可证
 
-[MIT](LICENSE)。Copyright (c) 2026 Codex GUI contributors —— 如果你 fork 后要署自己的名字，记得同步修改 `LICENSE`。
+[MIT](LICENSE) © 2026 Feanaze
 
 第三方组件的许可说明见 [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)。

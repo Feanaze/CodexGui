@@ -77,6 +77,8 @@ const state = {
     sendOnEnter: true, recentDirs: [], sidebarWidth: 272, dataDir: '',
   },
   codex: { found: true, path: '', version: '', admin: false },
+  // 服务商（API 链接 / 模型 / 密钥）状态，由宿主在启动和保存后推送
+  provider: { configured: true, baseUrl: '', model: '', hasApiKey: false, providerId: 'deepseek', configPath: '' },
   models: [],
   defaultModel: null,
   defaultEffort: null,
@@ -118,6 +120,7 @@ function init() {
   if (boot.models) state.models = boot.models;
   state.defaultModel = boot.defaultModel || null;
   state.defaultEffort = boot.defaultEffort || null;
+  if (boot.provider) state.provider = Object.assign(state.provider, boot.provider);
 
   applyConfig();
   wireUi();
@@ -125,6 +128,14 @@ function init() {
   bridge.send({ t: 'init' });
   autoSizeInput();
   try { $('#input').focus(); } catch (_e) { /* ignore */ }
+
+  // 首次使用（还没配过 API 链接）：直接把设置面板打开，省得用户找不到入口
+  if (boot.provider && !state.provider.configured) {
+    setTimeout(() => {
+      openSettings();
+      toast('info', '首次使用：先填写下面的 API 链接和密钥，保存后就能开始对话。');
+    }, 400);
+  }
 
   // 浏览器里预览用：?theme=light&view=empty|settings
   const qs = new URLSearchParams(location.search);
@@ -192,6 +203,10 @@ function onHostMessage(msg) {
       applyConfig();
       updateChips();
       updateFooter();
+      if (settingsOpen()) renderSettings();
+      break;
+    case 'provider':
+      state.provider = Object.assign(state.provider, msg);
       if (settingsOpen()) renderSettings();
       break;
     case 'codex':
@@ -1009,8 +1024,24 @@ function renderSettings() {
 
   $('#settings-body').innerHTML = '' +
     '<div class="section">' +
+    '<h3>API 配置</h3>' +
+    '<p class="desc">填好链接、模型和密钥就能直接用。内容写入 ' +
+    esc(state.provider.configPath || 'codex-home\\config.toml') + '，只保存在本机，不会上传。</p>' +
+    '<div class="row"><label class="lbl">API 链接</label><input class="text-input grow" id="set-provider-url" ' +
+    'placeholder="https://api.deepseek.com/" value="' + esc(state.provider.baseUrl || 'https://api.deepseek.com/') + '"></div>' +
+    '<div class="row"><label class="lbl">模型</label><input class="text-input grow" id="set-provider-model" ' +
+    'placeholder="deepseek-flash" value="' + esc(state.provider.model || '') + '"></div>' +
+    '<div class="row"><label class="lbl">API Key</label><input class="text-input grow" id="set-provider-key" type="password" ' +
+    'placeholder="' + (state.provider.hasApiKey ? '已保存，留空表示不修改' : 'sk-...') + '"></div>' +
+    '<div class="row"><button class="btn" id="set-provider-save">保存并启用</button>' +
+    '<span class="kv">' + (state.provider.configured
+      ? '当前：' + esc(state.provider.baseUrl || '') + (state.provider.hasApiKey ? '' : '（缺密钥）')
+      : '尚未配置') + '</span></div>' +
+    '</div>' +
+
+    '<div class="section">' +
     '<h3>工作目录</h3>' +
-    '<p class="desc">Codex 在这里读取和修改文件。默认 D:\\projects\\hello，改一次就会记住，下次启动不再询问。</p>' +
+    '<p class="desc">Codex 在这里读取和修改文件。改一次就会记住，下次启动不再询问。</p>' +
     '<div class="row"><input class="text-input grow" id="set-workdir" value="' + esc(c.workDir) + '">' +
     '<button class="btn" id="set-workdir-pick">浏览…</button>' +
     '<button class="btn" id="set-workdir-open">打开</button></div>' +
@@ -1073,6 +1104,16 @@ function renderSettings() {
     bridge.send({ t: 'codex.refresh' });
   };
   $('#set-codex-detect').onclick = () => bridge.send({ t: 'codex.refresh' });
+  $('#set-provider-save').onclick = () => {
+    bridge.send({
+      t: 'provider.save',
+      baseUrl: $('#set-provider-url').value.trim(),
+      model: $('#set-provider-model').value.trim(),
+      apiKey: $('#set-provider-key').value,
+      providerId: state.provider.providerId || 'deepseek',
+    });
+    $('#set-provider-key').value = '';
+  };
   $('#set-open-data').onclick = () => bridge.send({ t: 'shell.open', path: c.dataDir });
   $('#set-clear-session').onclick = () => {
     if (!state.session) { toast('info', '当前没有正在编辑的对话。'); return; }
