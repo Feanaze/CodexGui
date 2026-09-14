@@ -1,6 +1,6 @@
 # Codex GUI
 
-A native Windows GUI for the [Codex CLI](https://github.com/openai/codex): sessions, Markdown rendering, tool-call cards, reasoning traces and image attachments, in a regular desktop window.
+A native Windows GUI for the [Codex CLI](https://github.com/openai/codex): sessions, Markdown rendering, tool-call cards, reasoning traces and image attachments, in a regular desktop window.(We will adapt the English interface as quickly as possible.)
 
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%2F11-0078D4)
 ![.NET](https://img.shields.io/badge/.NET-7.0--windows-512BD4)
